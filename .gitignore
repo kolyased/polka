@@ -1,0 +1,21 @@
+# Environment and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+PASSWORD.local.txt
+*.local.*
+# Local data and databases
+data/
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+Книги*/
+node_modules/
+.playwright-mcp/
+*.tar.gz
+*.bundle
+.DS_Store

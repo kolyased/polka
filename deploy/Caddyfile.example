@@ -1,0 +1,7 @@
+# Replace with your domain; run Caddy on the Docker host.
+audio.example.com {
+    reverse_proxy 127.0.0.1:8787 {
+        # Overwrite inbound forwarding headers with the actual peer address.
+        header_up X-Forwarded-For {remote_host}
+    }
+}

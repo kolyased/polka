@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f5f4ef"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Твоя личная библиотека аудиокниг. Слушай в своём ритме."><title>Полка — аудиокниги</title><link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/icon-192.png"><link rel="stylesheet" href="/style.css"><script type="module" src="/app.js"></script></head>
+<body>
+<svg class="symbols" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4h6v16H4zM14 4h5v16h-5zM7 7v4M16.5 7v4"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="m9 5 11 7-11 7z"/></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 15A9 9 0 0 1 9 4a9 9 0 1 0 11 11Z"/></symbol>
+<symbol id="i-mark" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h12M9 12h12M9 18h12M3 6h1M3 12h1M3 18h1"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="m9 4-5 5 5 5M4 9h9a7 7 0 1 1-6 11"/></symbol>
+</defs></svg>
+<div id="auth" class="auth-screen" hidden><div class="auth-card"><div class="brand"><svg><use href="#i-book"/></svg>полка<span>аудиокниги</span></div><p class="eyebrow">ТВОЁ ЛИЧНОЕ ПРОСТРАНСТВО</p><h1 id="auth-title">С возвращением.</h1><p id="auth-description" class="muted">Войди, чтобы продолжить свою историю.</p><form id="auth-form"><label id="setup-label" hidden>Ключ первого входа<input id="setup-key" autocomplete="off"></label><label>Пароль<input id="password" type="password" autocomplete="current-password" required></label><p id="auth-error" role="alert" class="error"></p><button class="primary" type="submit">Открыть библиотеку <span>→</span></button></form><p class="small muted">Книги и прогресс доступны только тебе.</p></div></div>
+<div id="app" hidden>
+<aside class="sidebar"><a class="brand" href="/" aria-label="Полка, главная"><svg><use href="#i-book"/></svg>полка<span>аудиокниги</span></a><div class="nav-caption">МОЁ ПРОСТРАНСТВО</div><nav id="nav"><button class="nav-item active" data-view="library"><svg><use href="#i-book"/></svg>Библиотека<span id="nav-count"></span></button><button class="nav-item" data-view="downloads"><svg><use href="#i-download"/></svg>Загрузки</button><button class="nav-item" data-view="settings"><svg><use href="#i-settings"/></svg>Настройки</button></nav><div class="sidebar-bottom"><span class="status-dot"></span><span id="connection">На своём сервере</span><p>Хорошая история всегда рядом.</p></div></aside>
+<main>
+<header class="topbar"><span class="breadcrumb">Личная библиотека <span>/</span> <b id="page-label">Книги</b></span><button id="add-top" class="primary compact"><svg><use href="#i-plus"/></svg>Добавить книгу</button></header>
+<section id="library-view" class="view"><div class="page-heading"><div><p class="eyebrow">В ТВОЁМ РИТМЕ</p><h1>Время для истории.</h1><p class="muted">Знакомые голоса. Новые миры. Твоя полка.</p></div><span id="library-total" class="count-label"></span></div><div id="continue"></div><div class="section-row"><h2>Мои книги <span id="book-count"></span></h2><label class="search"><svg><use href="#i-search"/></svg><input id="search" placeholder="Найти книгу или автора" aria-label="Найти книгу или автора"></label></div><div class="filters" id="filters"><button class="selected" data-filter="all">Все книги</button><button data-filter="listening">Слушаю</button><button data-filter="downloaded">Скачаны</button><button data-filter="finished">Завершены</button></div><div id="books" class="book-grid"></div><p class="library-footer">Только твои книги. Только твой ритм.</p></section>
+<section id="downloads-view" class="view" hidden><p class="eyebrow">ВСЕГДА С ТОБОЙ</p><h1>Без интернета.</h1><p class="muted">Скачай книгу перед дорогой. Место прослушивания сохранится.</p><div id="download-list"></div><div class="notice">Во время скачивания оставь приложение открытым. iOS может приостановить загрузку в фоне или очистить данные сайта при нехватке места.</div></section>
+<section id="settings-view" class="view" hidden><p class="eyebrow">КАК ТЕБЕ УДОБНО</p><h1>Настройки.</h1><div class="setting-card"><h2>Оформление</h2><label>Тема<select id="theme"><option value="system">Как на устройстве</option><option value="light">Светлая</option><option value="dark">Тёмная</option></select></label></div><div class="setting-card"><h2>На этом устройстве</h2><p id="device-storage" class="muted"></p><button id="persist" class="secondary">Запросить постоянное хранение</button><p class="small muted">Окончательное решение о хранении принимает браузер.</p></div><div class="setting-card"><h2>На сервере</h2><p id="server-storage" class="muted">Проверяем свободное место…</p></div><div class="setting-card"><h2>Установить на iPhone</h2><p class="muted">Открой сайт в Safari → «Поделиться» → «На экран Домой». После скачивания книги приложение можно открывать без интернета.</p><p class="small muted">Фоновое воспроизведение и таймер сна зависят от версии iOS. Проверь их на своём устройстве.</p></div><button id="logout" class="secondary">Выйти и очистить данные устройства</button></section>
+</main>
+<aside id="now-panel" class="now-panel"><p class="eyebrow">СЕЙЧАС НА ПОЛКЕ</p><div id="now-content"></div><div class="quiet-note"><span>❧</span><p>У каждой истории<br>есть своё время.</p></div></aside>
+<div id="mini" class="mini-player" hidden><button id="mini-open" class="mini-title"></button><button id="mini-play" class="icon-button" aria-label="Воспроизвести"><svg><use href="#i-play"/></svg></button></div>
+<nav class="mobile-nav"><button data-view="library" class="active"><svg><use href="#i-book"/></svg><span>Библиотека</span></button><button data-view="downloads"><svg><use href="#i-download"/></svg><span>Загрузки</span></button><button data-view="settings"><svg><use href="#i-settings"/></svg><span>Настройки</span></button></nav>
+</div>
+<dialog id="player-dialog" class="player-dialog" aria-labelledby="player-title">
+  <div class="player-top">
+    <button class="icon-button" data-close="player-dialog" aria-label="Свернуть плеер">⌄</button>
+    <span class="eyebrow">СЕЙЧАС ИГРАЕТ</span>
+    <button id="player-download" class="download-control" aria-label="Скачать книгу" title="Скачать книгу для офлайн прослушивания"><svg aria-hidden="true"><use href="#i-download"/></svg><span>Скачать</span></button>
+  </div>
+  <div id="player-cover"></div>
+  <div class="player-meta"><h2 id="player-title"></h2><p id="player-author" class="muted"></p></div>
+  <div class="player-timeline">
+    <button id="chapter-label" class="text-button"></button>
+    <input id="seek" type="range" min="0" max="100" step=".1" value="0" aria-label="Позиция в главе">
+    <div class="time-row"><span id="elapsed">0:00</span><span id="remaining">0:00</span></div>
+  </div>
+  <div class="transport">
+    <button id="rewind" aria-label="Назад на 15 секунд"><svg aria-hidden="true"><use href="#i-back"/></svg><span>15 сек</span></button>
+    <button id="play" class="play-large" aria-label="Воспроизвести"><svg aria-hidden="true"><use href="#i-play"/></svg></button>
+    <button id="forward" aria-label="Вперёд на 15 секунд"><svg class="flip" aria-hidden="true"><use href="#i-back"/></svg><span>15 сек</span></button>
+  </div>
+  <div class="player-tools"><button id="speed">1×<small>Скорость</small></button><button id="sleep"><svg><use href="#i-moon"/></svg><small id="sleep-label">Таймер сна</small></button><button id="bookmark"><svg><use href="#i-mark"/></svg><small>Закладка</small></button></div>
+  <button id="chapters" class="chapter-button"><svg><use href="#i-list"/></svg>Главы и закладки <span>→</span></button>
+  <div class="player-footer"><p id="total-progress" class="small muted"></p><button id="player-state" class="muted" aria-label="Состояние воспроизведения"></button></div>
+</dialog>
+<dialog id="sheet" class="sheet"><div class="dialog-head"><h2 id="sheet-title"></h2><button class="icon-button" data-close="sheet" aria-label="Закрыть"><svg><use href="#i-close"/></svg></button></div><div id="sheet-content"></div></dialog>
+<dialog id="upload-dialog" class="sheet upload-dialog"><div class="dialog-head"><h2>Добавить книгу</h2><button class="icon-button" data-close="upload-dialog" aria-label="Закрыть"><svg><use href="#i-close"/></svg></button></div><form id="upload-form"><label>Название<input id="upload-title" maxlength="300" required placeholder="Название книги"></label><label>Автор<input id="upload-author" maxlength="200" placeholder="Имя автора"></label><label class="file-drop"><svg><use href="#i-plus"/></svg><strong>Выбрать аудиофайлы</strong><span>MP3, M4A, M4B · до 3 ГБ на книгу</span><input type="file" id="upload-files" accept=".mp3,.m4a,.m4b" multiple required></label><p id="file-summary" class="small muted">Несколько файлов будут объединены в одну книгу.</p><div id="file-order"></div><progress id="upload-progress" value="0" max="100" hidden></progress><p id="upload-status" role="status" class="small"></p><button type="submit" id="upload-submit" class="primary">Добавить в библиотеку</button><button type="button" id="upload-pause" class="secondary" hidden>Приостановить</button></form></dialog>
+<div id="toast" role="status" class="toast" hidden></div><audio id="audio" preload="metadata"></audio>
+</body></html>

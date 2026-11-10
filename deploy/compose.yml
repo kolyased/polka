@@ -1,0 +1,32 @@
+name: polka
+services:
+  polka:
+    build: ..
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8787:8787"
+    environment:
+      HOST: "0.0.0.0"
+      ORIGIN: ${ORIGIN:-http://localhost:8787}
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES:-}
+      LIBRARY_LIMIT_GB: ${LIBRARY_LIMIT_GB:-10}
+    volumes:
+      - polka-data:/data
+    mem_limit: 512m
+    cpus: 1.0
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8787/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+volumes:
+  polka-data:
